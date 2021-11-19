@@ -3,8 +3,8 @@
   become: yes
   tasks:
     - name: Check and remove existing containers
-	  shell: |
-	    if [ `docker ps -a | wc -l` -gt 1 ]; then
+      shell: |
+        if [ `docker ps -a | wc -l` -gt 1 ]; then
           echo "Service found"
           docker system prune -fa
         else
