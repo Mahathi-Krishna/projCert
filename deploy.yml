@@ -6,8 +6,9 @@
       shell: |
         if [ `docker ps -a | wc -l` -gt 1 ]; then
           echo "Service found"
-          docker system prune -fa
           docker rm -f $(docker ps -aq)
+          docker system prune -fa
+          echo "Cleaned all"
         else
           echo "No Service found"
         fi
