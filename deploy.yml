@@ -8,9 +8,9 @@
           echo "Service found"
           docker rm -f $(docker ps -aq)
           docker system prune -fa
-          echo "Cleaned all"
+          docker service rm `docker service ls | grep -v NAME | grep mysvc | awk '{print $2}'`
         else
           echo "No Service found"
         fi
     - name: Deploy phpapp
-      command: docker run -d -p 9080:8080 mahathkrish/phpapp:'{{build}}'
+      command: docker service create --name mysvc --replicas 2 -p 9080:8080 mahathkrish/phpapp:'{{build}}'
