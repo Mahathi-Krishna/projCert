@@ -1,0 +1,14 @@
+---
+- hosts: '{{env}}'
+  become: yes
+  tasks:
+    - name: Check and remove existing containers
+	  shell: |
+	    if [ `docker ps -a | wc -l` -gt 1 ]; then
+          echo "Service found"
+          docker system prune -fa
+        else
+          echo "No Service found"
+        fi
+    - name: Deploy phpapp
+      command: docker run -d -p 9080:8080 mahathkrish/phpapp:'{{build}}'
